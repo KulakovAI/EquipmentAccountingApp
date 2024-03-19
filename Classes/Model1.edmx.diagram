@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b4056376970f42698ef6cc6c83c06c29" Name="Diagram1">
+        <EntityTypeShape EntityType="EquipmentAccountingModel.Admin" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.Equipment" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.Status" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.TechnicalMaintenance" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.TechnicalSpecifications" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.TypeMaintenance" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="EquipmentAccountingModel.Workshop" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="EquipmentAccountingModel.FK_Equipment_Admin" ManuallyRouted="false" />
+        <AssociationConnector Association="EquipmentAccountingModel.FK_Equipment_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="EquipmentAccountingModel.FK_Equipment_TechnicalSpecifications" ManuallyRouted="false" />
+        <AssociationConnector Association="EquipmentAccountingModel.FK_Equipment_Workshop" ManuallyRouted="false" />
+        <AssociationConnector Association="EquipmentAccountingModel.FK_TechnicalMaintenance_Equipment" ManuallyRouted="false" />
+        <AssociationConnector Association="EquipmentAccountingModel.FK_TechnicalMaintenance_TypeMaintenance" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

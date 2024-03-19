@@ -1,0 +1,46 @@
+﻿<Window x:Class="EquipmentAccountingApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EquipmentAccountingApp"
+        mc:Ignorable="d"
+        Title="Главное меню" Height="500" Width="1000">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".3*"/>
+            <RowDefinition Height="1.1*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" 
+            HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock 
+                    Name="TxbFIO"
+                    Text="Выполнил: Кулаков Александр Игоревич" 
+                    TextAlignment="Center"/>
+            <TextBlock 
+                    Name="TxbUser"
+                    TextAlignment="Center"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1"
+            HorizontalAlignment="center" VerticalAlignment="Center">
+            <!--<Image Source="/Resources/logo.png" HorizontalAlignment="Left"></Image>-->
+            <StackPanel Margin="50 0 0 0" Orientation="Horizontal"
+            HorizontalAlignment="center" VerticalAlignment="Center">
+                <Button Width="100" Height="30" Content="Авторизация" Name="btnAutor"
+                        Click="btnAutor_Click"/>
+                <Button Width="100" Height="30" Content="Оборудования" Name="btnEquip"
+                        Click="btnEquip_Click"/>
+                <TextBlock 
+                    Name="TxbNAME"
+                    Text='Учёт станков на "Транс"'                      
+                    Margin="10"
+                    TextAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+        <Frame Grid.Row="2" 
+               Name="frmMain"
+               NavigationUIVisibility="Hidden">
+        </Frame>
+    </Grid>
+</Window>

@@ -1,0 +1,514 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище EquipmentAccountingModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="idAdmin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="20" />
+          <Property Name="Password" Type="nvarchar" MaxLength="20" />
+          <Property Name="FIO" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="Country" Type="nvarchar(max)" />
+          <Property Name="Photo" Type="image" />
+          <Property Name="DateOfBirth" Type="date" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="idEquipment" />
+          </Key>
+          <Property Name="idEquipment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentName" Type="nvarchar(max)" />
+          <Property Name="SerialNumber" Type="nvarchar(max)" />
+          <Property Name="DateOfPurchase" Type="date" />
+          <Property Name="Cost" Type="float" />
+          <Property Name="DateOfDecommissioning" Type="date" />
+          <Property Name="idWorkshop" Type="int" />
+          <Property Name="idTechnicalSpecifications" Type="int" />
+          <Property Name="idStatus" Type="int" />
+          <Property Name="idAdmin" Type="int" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="idStatus" />
+          </Key>
+          <Property Name="idStatus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TechnicalMaintenance">
+          <Key>
+            <PropertyRef Name="idTechnicalMaintenance" />
+          </Key>
+          <Property Name="idTechnicalMaintenance" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idEquipment" Type="int" />
+          <Property Name="DateOfMaintenance" Type="date" />
+          <Property Name="idType" Type="int" />
+          <Property Name="Price" Type="float" />
+        </EntityType>
+        <EntityType Name="TechnicalSpecifications">
+          <Key>
+            <PropertyRef Name="idTechnicalSpecifications" />
+          </Key>
+          <Property Name="idTechnicalSpecifications" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Manufacturer" Type="nvarchar(max)" />
+          <Property Name="MachineDimensions" Type="nvarchar(max)" />
+          <Property Name="Power" Type="float" />
+        </EntityType>
+        <EntityType Name="TypeMaintenance">
+          <Key>
+            <PropertyRef Name="idType" />
+          </Key>
+          <Property Name="idType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeOfMaintenance" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Workshop">
+          <Key>
+            <PropertyRef Name="idWorkshop" />
+          </Key>
+          <Property Name="idWorkshop" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Number" Type="int" />
+          <Property Name="DateOfCreation" Type="date" />
+        </EntityType>
+        <Association Name="FK_Equipment_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="idAdmin" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="idStatus" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_TechnicalSpecifications">
+          <End Role="TechnicalSpecifications" Type="Self.TechnicalSpecifications" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechnicalSpecifications">
+              <PropertyRef Name="idTechnicalSpecifications" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idTechnicalSpecifications" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_Workshop">
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshop">
+              <PropertyRef Name="idWorkshop" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idWorkshop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalMaintenance_Equipment">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="TechnicalMaintenance" Type="Self.TechnicalMaintenance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="idEquipment" />
+            </Principal>
+            <Dependent Role="TechnicalMaintenance">
+              <PropertyRef Name="idEquipment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalMaintenance_TypeMaintenance">
+          <End Role="TypeMaintenance" Type="Self.TypeMaintenance" Multiplicity="0..1" />
+          <End Role="TechnicalMaintenance" Type="Self.TechnicalMaintenance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeMaintenance">
+              <PropertyRef Name="idType" />
+            </Principal>
+            <Dependent Role="TechnicalMaintenance">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище EquipmentAccountingModelContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechnicalMaintenance" EntityType="Self.TechnicalMaintenance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TechnicalSpecifications" EntityType="Self.TechnicalSpecifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeMaintenance" EntityType="Self.TypeMaintenance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Equipment_Admin" Association="Self.FK_Equipment_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_Status" Association="Self.FK_Equipment_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_TechnicalSpecifications" Association="Self.FK_Equipment_TechnicalSpecifications">
+            <End Role="TechnicalSpecifications" EntitySet="TechnicalSpecifications" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_Workshop" Association="Self.FK_Equipment_Workshop">
+            <End Role="Workshop" EntitySet="Workshop" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalMaintenance_Equipment" Association="Self.FK_TechnicalMaintenance_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="TechnicalMaintenance" EntitySet="TechnicalMaintenance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalMaintenance_TypeMaintenance" Association="Self.FK_TechnicalMaintenance_TypeMaintenance">
+            <End Role="TypeMaintenance" EntitySet="TypeMaintenance" />
+            <End Role="TechnicalMaintenance" EntitySet="TechnicalMaintenance" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EquipmentAccountingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="idAdmin" />
+          </Key>
+          <Property Name="idAdmin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FIO" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_Equipment_Admin" FromRole="Admin" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="idEquipment" />
+          </Key>
+          <Property Name="idEquipment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SerialNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfPurchase" Type="DateTime" Precision="0" />
+          <Property Name="Cost" Type="Double" />
+          <Property Name="DateOfDecommissioning" Type="DateTime" Precision="0" />
+          <Property Name="idWorkshop" Type="Int32" />
+          <Property Name="idTechnicalSpecifications" Type="Int32" />
+          <Property Name="idStatus" Type="Int32" />
+          <Property Name="idAdmin" Type="Int32" />
+          <NavigationProperty Name="Admin" Relationship="Self.FK_Equipment_Admin" FromRole="Equipment" ToRole="Admin" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Equipment_Status" FromRole="Equipment" ToRole="Status" />
+          <NavigationProperty Name="TechnicalSpecifications" Relationship="Self.FK_Equipment_TechnicalSpecifications" FromRole="Equipment" ToRole="TechnicalSpecifications" />
+          <NavigationProperty Name="Workshop" Relationship="Self.FK_Equipment_Workshop" FromRole="Equipment" ToRole="Workshop" />
+          <NavigationProperty Name="TechnicalMaintenance" Relationship="Self.FK_TechnicalMaintenance_Equipment" FromRole="Equipment" ToRole="TechnicalMaintenance" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="idStatus" />
+          </Key>
+          <Property Name="idStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_Equipment_Status" FromRole="Status" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TechnicalMaintenance">
+          <Key>
+            <PropertyRef Name="idTechnicalMaintenance" />
+          </Key>
+          <Property Name="idTechnicalMaintenance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idEquipment" Type="Int32" />
+          <Property Name="DateOfMaintenance" Type="DateTime" Precision="0" />
+          <Property Name="idType" Type="Int32" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_TechnicalMaintenance_Equipment" FromRole="TechnicalMaintenance" ToRole="Equipment" />
+          <NavigationProperty Name="TypeMaintenance" Relationship="Self.FK_TechnicalMaintenance_TypeMaintenance" FromRole="TechnicalMaintenance" ToRole="TypeMaintenance" />
+        </EntityType>
+        <EntityType Name="TechnicalSpecifications">
+          <Key>
+            <PropertyRef Name="idTechnicalSpecifications" />
+          </Key>
+          <Property Name="idTechnicalSpecifications" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Manufacturer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MachineDimensions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Power" Type="Double" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_Equipment_TechnicalSpecifications" FromRole="TechnicalSpecifications" ToRole="Equipment" />
+        </EntityType>
+        <EntityType Name="TypeMaintenance">
+          <Key>
+            <PropertyRef Name="idType" />
+          </Key>
+          <Property Name="idType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeOfMaintenance" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TechnicalMaintenance" Relationship="Self.FK_TechnicalMaintenance_TypeMaintenance" FromRole="TypeMaintenance" ToRole="TechnicalMaintenance" />
+        </EntityType>
+        <EntityType Name="Workshop">
+          <Key>
+            <PropertyRef Name="idWorkshop" />
+          </Key>
+          <Property Name="idWorkshop" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="DateOfCreation" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_Equipment_Workshop" FromRole="Workshop" ToRole="Equipment" />
+        </EntityType>
+        <Association Name="FK_Equipment_Admin">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="idAdmin" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idAdmin" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="idStatus" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_TechnicalSpecifications">
+          <End Role="TechnicalSpecifications" Type="Self.TechnicalSpecifications" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TechnicalSpecifications">
+              <PropertyRef Name="idTechnicalSpecifications" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idTechnicalSpecifications" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipment_Workshop">
+          <End Role="Workshop" Type="Self.Workshop" Multiplicity="0..1" />
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshop">
+              <PropertyRef Name="idWorkshop" />
+            </Principal>
+            <Dependent Role="Equipment">
+              <PropertyRef Name="idWorkshop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalMaintenance_Equipment">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="TechnicalMaintenance" Type="Self.TechnicalMaintenance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="idEquipment" />
+            </Principal>
+            <Dependent Role="TechnicalMaintenance">
+              <PropertyRef Name="idEquipment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalMaintenance_TypeMaintenance">
+          <End Role="TypeMaintenance" Type="Self.TypeMaintenance" Multiplicity="0..1" />
+          <End Role="TechnicalMaintenance" Type="Self.TechnicalMaintenance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeMaintenance">
+              <PropertyRef Name="idType" />
+            </Principal>
+            <Dependent Role="TechnicalMaintenance">
+              <PropertyRef Name="idType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EquipmentAccountingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="Self.Admin" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TechnicalMaintenance" EntityType="Self.TechnicalMaintenance" />
+          <EntitySet Name="TechnicalSpecifications" EntityType="Self.TechnicalSpecifications" />
+          <EntitySet Name="TypeMaintenance" EntityType="Self.TypeMaintenance" />
+          <EntitySet Name="Workshop" EntityType="Self.Workshop" />
+          <AssociationSet Name="FK_Equipment_Admin" Association="Self.FK_Equipment_Admin">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_Status" Association="Self.FK_Equipment_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_TechnicalSpecifications" Association="Self.FK_Equipment_TechnicalSpecifications">
+            <End Role="TechnicalSpecifications" EntitySet="TechnicalSpecifications" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipment_Workshop" Association="Self.FK_Equipment_Workshop">
+            <End Role="Workshop" EntitySet="Workshop" />
+            <End Role="Equipment" EntitySet="Equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalMaintenance_Equipment" Association="Self.FK_TechnicalMaintenance_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="TechnicalMaintenance" EntitySet="TechnicalMaintenance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalMaintenance_TypeMaintenance" Association="Self.FK_TechnicalMaintenance_TypeMaintenance">
+            <End Role="TypeMaintenance" EntitySet="TypeMaintenance" />
+            <End Role="TechnicalMaintenance" EntitySet="TechnicalMaintenance" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище EquipmentAccountingModelContainer" CdmEntityContainer="EquipmentAccountingEntities">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipment">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.Equipment">
+              <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="idEquipment" ColumnName="idEquipment" />
+                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
+                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="DateOfDecommissioning" ColumnName="DateOfDecommissioning" />
+                <ScalarProperty Name="idWorkshop" ColumnName="idWorkshop" />
+                <ScalarProperty Name="idTechnicalSpecifications" ColumnName="idTechnicalSpecifications" />
+                <ScalarProperty Name="idStatus" ColumnName="idStatus" />
+                <ScalarProperty Name="idAdmin" ColumnName="idAdmin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="idStatus" ColumnName="idStatus" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechnicalMaintenance">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.TechnicalMaintenance">
+              <MappingFragment StoreEntitySet="TechnicalMaintenance">
+                <ScalarProperty Name="idTechnicalMaintenance" ColumnName="idTechnicalMaintenance" />
+                <ScalarProperty Name="idEquipment" ColumnName="idEquipment" />
+                <ScalarProperty Name="DateOfMaintenance" ColumnName="DateOfMaintenance" />
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TechnicalSpecifications">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.TechnicalSpecifications">
+              <MappingFragment StoreEntitySet="TechnicalSpecifications">
+                <ScalarProperty Name="idTechnicalSpecifications" ColumnName="idTechnicalSpecifications" />
+                <ScalarProperty Name="Manufacturer" ColumnName="Manufacturer" />
+                <ScalarProperty Name="MachineDimensions" ColumnName="MachineDimensions" />
+                <ScalarProperty Name="Power" ColumnName="Power" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeMaintenance">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.TypeMaintenance">
+              <MappingFragment StoreEntitySet="TypeMaintenance">
+                <ScalarProperty Name="idType" ColumnName="idType" />
+                <ScalarProperty Name="TypeOfMaintenance" ColumnName="TypeOfMaintenance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workshop">
+            <EntityTypeMapping TypeName="EquipmentAccountingModel.Workshop">
+              <MappingFragment StoreEntitySet="Workshop">
+                <ScalarProperty Name="idWorkshop" ColumnName="idWorkshop" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
